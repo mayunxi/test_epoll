@@ -179,14 +179,7 @@ static void do_read(int epollfd,int fd,char *buf)
 static void do_write(int epollfd,int fd,char *buf)
 {
     int nwrite;
-    memset(buf,0,MAXSIZE);//写完buf清零
-    
-    while (1) {
-      nwrite = write(fd,"buf",strlen("buf"));
-      sleep(1);
-    }
-
-
+    nwrite = write(fd,buf,strlen(buf));
     if (nwrite == -1)
     {
         perror("write error:");
@@ -195,6 +188,7 @@ static void do_write(int epollfd,int fd,char *buf)
     }
     else
         modify_event(epollfd,fd,EPOLLIN);
+    memset(buf,0,MAXSIZE);//写完buf清零
 
 }
 
