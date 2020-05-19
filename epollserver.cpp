@@ -180,21 +180,11 @@ static void do_write(int epollfd,int fd,char *buf)
 {
     int nwrite;
     memset(buf,0,MAXSIZE);//写完buf清零
-    
+    //一直发送
     while (1) {
       nwrite = write(fd,"buf",strlen("buf"));
       sleep(1);
     }
-
-
-    if (nwrite == -1)
-    {
-        perror("write error:");
-        close(fd);
-        delete_event(epollfd,fd,EPOLLOUT);
-    }
-    else
-        modify_event(epollfd,fd,EPOLLIN);
 
 }
 
